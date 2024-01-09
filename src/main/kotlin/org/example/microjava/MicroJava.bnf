@@ -1,0 +1,92 @@
+{
+    parserClass="org.example.microjava.parser.MicroJavaParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="MicroJava"
+    psiImplClassSuffix="Impl"
+    psiPackage="org.example.microjava.psi"
+    psiImplPackage="org.example.microjava.psi.impl"
+
+    elementTypeHolderClass="org.example.microjava.psi.MicroJavaTypes"
+    elementTypeClass="org.example.microjava.psi.MicroJavaElementType"
+    tokenTypeClass="org.example.microjava.psi.MicroJavaTokenType"
+
+    psiImplUtilClass="org.example.microjava.psi.impl.MicroJavaPsiImplUtil"
+}
+
+Program ::= "program" Identifier ( ConstDecl | VarDecl | ClassDecl )* "{" MethodDecl* "}"
+
+ConstDecl ::= "final" Type Identifier "=" (number | CharConst) ";"
+
+VarDecl ::= Type Identifier ( "," Identifier )* ";"
+
+ClassDecl ::= "class" Identifier "{" VarDecl* "}"
+
+MethodDecl ::= (Type | "void") Identifier "(" [FormPars] ")" VarDecl* Block
+
+FormPars ::= Type Identifier ( "," Type Identifier )*
+
+
+SimpleType ::= (ident | "int" | "char")
+
+Identifier ::= ident
+{
+    mixin="org.example.microjava.psi.impl.MicroJavaNamedElementImpl"
+    implements="org.example.microjava.psi.MicroJavaNamedElement"
+    methods=[getName setName getNameIdentifier]
+}
+
+Type ::= SimpleType [ "[" "]" ]
+
+Block ::= "{" Statement* "}"
+
+Statement ::= Designator (AssignOp Expr | ActPars | "++"| "--") ";"
+            | "if" "(" Condition ")" Statement ["else" Statement]
+            | "while" "(" Condition ")" Statement
+            | "break" ";"
+            | "return" [Expr] ";"
+            | "read" "(" Designator ")" ";"
+            | "print" "(" Expr ["," number] ")" ";"
+            |  "(" Expr ["," number] ")" ";"
+            | Block
+            | ";"
+
+AssignOp ::= "=" | "+=" | "-=" | "*=" | "/=" | "%="
+
+ActPars ::= "(" [ Expr ( "," Expr )* ] ")"
+
+Condition ::= CondTerm ( "||" CondTerm )*
+
+CondTerm ::= CondFact ( "&&" CondFact )*
+
+CondFact ::= Expr RelOp Expr
+
+RelOp ::= "==" | "!=" | ">" | ">=" |  "<" | "<="
+
+
+Expr ::= ["-"] Term ( AddOp Term )*
+
+
+Term ::= Factor ( MulOp Factor | "**" number)*
+
+Factor ::= (Designator [ ActPars ])
+            | number
+            | CharConst
+            | "new" SimpleType [ "[" Expr "]" ]
+            | "(" Expr ")"
+
+CharConst ::= "'a'" | "'b'" | "'c'" | "'d'" | "'e'" | "'f'" | "'g'" | "'h'" | "'i'" | "'j'" | "'k'" | "'l'" | "'m'" | "'n'" | "'o'" | "'p'" | "'q'" | "'r'" | "'s'" | "'t'" | "'u'" | "'v'" | "'w'" | "'x'" | "'y'" | "'z'" | "'A'" | "'B'" | "'C'" | "'D'" | "'E'" | "'F'" | "'G'" | "'H'" | "'I'" | "'J'" | "'K'" | "'L'" | "'M'" | "'N'" | "'O'" | "'P'" | "'Q'" | "'R'" | "'S'" | "'T'" | "'U'" | "'V'" | "'W'" | "'X'" | "'Y'" | "'Z'" | "'0'" | "'1'" | "'2'" | "'3'" | "'4'" | "'5'" | "'6'" | "'7'" | "'8'" | "'9'" | "' '" | "'\\t'" | "'\\n'" | "'\\r'" | "'\\f'" | "'\\b'" | "'\\\\'" | "'\\''" | "'\"'" | "'['" | "']'" | "'('" | "')'" | "'{'" | "'}'" | "'+'" | "'-'" | "'*'" | "'/'" | "'%'" | "'!'" | "'&'" | "'|'" | "'^'" | "'~'" | "'='" | "'>'" | "'<'" | "'?'" | "':'" | "'.'" | "','" | "';'"
+
+Designator ::= ident ( "." ident | "[" Expr "]" )*
+{
+    methods=[getReferences]
+}
+
+AddOp ::= "+" | "-"
+
+MulOp ::= "*" | "/" | "%"
+
+Comment ::= "/*" char* | Comment "*/"
+
+white_space ::= " " | "\t" | "\n" | "\r"
