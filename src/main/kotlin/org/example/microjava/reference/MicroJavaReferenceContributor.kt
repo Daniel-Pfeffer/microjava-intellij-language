@@ -10,8 +10,12 @@ class MicroJavaReferenceContributor : PsiReferenceContributor() {
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
         LOG.info("registerReferenceProviders")
         registrar.registerReferenceProvider(
+            PlatformPatterns.psiElement(MicroJavaDesignator::class.java),
+            MicroJavaDesignatorReferenceProvider()
+        )
+        registrar.registerReferenceProvider(
             PlatformPatterns.psiElement(),
-            MicroJavaReferenceProvider()
+            MicroJavaClassTypeReferenceProvider()
         )
     }
 

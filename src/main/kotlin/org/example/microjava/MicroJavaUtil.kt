@@ -2,6 +2,7 @@ package org.example.microjava
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.psi.util.childrenOfType
 import org.example.microjava.psi.*
 
 object MicroJavaUtil {
@@ -19,6 +20,17 @@ object MicroJavaUtil {
     ): List<PsiElement> {
         return findDesignatorsInBlock(parentScope.block)
             .filter { name == null || name == it.text }
+    }
+
+    fun findReferenceToClassDecl(
+        element: PsiElement,
+        name: String? = null,
+    ): PsiElement? {
+        val file = element.containingFile as MicroJavaFile
+
+        return file.childrenOfType<MicroJavaClassDecl>().firstOrNull {
+                it.identifier.name == name
+            }?.identifier
     }
 
     fun findBacktrackingReferenceToDesignator(

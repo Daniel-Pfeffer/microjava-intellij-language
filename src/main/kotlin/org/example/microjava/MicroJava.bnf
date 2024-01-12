@@ -19,7 +19,9 @@ Program ::= "program" Identifier ( ConstDecl | VarDecl | ClassDecl )* "{" Method
 
 ConstDecl ::= "final" Type Identifier "=" (number | CharConst) ";"
 
-VarDecl ::= Type Identifier ( "," Identifier )* ";"
+VarDecl ::= Type Identifier ( "," Identifier )* ";"{
+    methods=[isGlobal isLocal]
+}
 
 ClassDecl ::= "class" Identifier "{" VarDecl* "}"
 
@@ -29,6 +31,9 @@ FormPars ::= Type Identifier ( "," Type Identifier )*
 
 
 SimpleType ::= (ident | "int" | "char")
+{
+    methods=[getReferences]
+}
 
 Identifier ::= ident
 {

@@ -63,9 +63,15 @@
                 forClass="org.example.microjava.psi.MicroJavaDesignator"
                 implementationClass="org.example.microjava.psi.manipulator.DesignatorManipulator"
         />
+        <lang.elementManipulator
+                forClass="org.example.microjava.psi.MicroJavaSimpleType"
+                implementationClass="org.example.microjava.psi.manipulator.SimpleTypeManipulator"
+        />
         <lang.findUsagesProvider
                 language="MicroJava"
                 implementationClass="org.example.microjava.usage.MicroJavaUsagesProvider"
         />
+        <annotator language="MicroJava" implementationClass="org.example.microjava.MicroJavaAnnotator"/>
+
     </extensions>
 </idea-plugin>

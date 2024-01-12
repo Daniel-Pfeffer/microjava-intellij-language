@@ -8,7 +8,7 @@ import org.example.microjava.psi.MicroJavaDesignator
 import org.example.microjava.psi.MicroJavaFile
 import org.example.microjava.psi.MicroJavaNamedElement
 
-class MicroJavaReference(
+class MicroJavaDesignatorReference(
     element: MicroJavaDesignator,
 ) : PsiReferenceBase<MicroJavaDesignator>(element), PsiPolyVariantReference {
 
@@ -17,7 +17,7 @@ class MicroJavaReference(
 
 
     companion object {
-        val LOG = Logger.getInstance(MicroJavaReference::class.java)
+        val LOG = Logger.getInstance(MicroJavaDesignatorReference::class.java)
     }
 
     override fun resolve(): PsiElement? {

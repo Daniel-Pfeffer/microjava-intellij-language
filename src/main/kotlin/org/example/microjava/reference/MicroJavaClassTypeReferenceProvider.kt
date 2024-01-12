@@ -5,19 +5,26 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceProvider
 import com.intellij.util.ProcessingContext
-import org.example.microjava.psi.MicroJavaDesignator
+import org.example.microjava.psi.MicroJavaSimpleType
 
-class MicroJavaReferenceProvider : PsiReferenceProvider() {
+class MicroJavaClassTypeReferenceProvider : PsiReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
         LOG.info("getReferencesByElement: $element")
-        if (element !is MicroJavaDesignator) {
+
+        if (element !is MicroJavaSimpleType) {
             return PsiReference.EMPTY_ARRAY
         }
 
-        return arrayOf(MicroJavaReference(element))
+        val typeDecl = element.firstChild.text
+
+        if (typeDecl == "int" || typeDecl == "char") {
+            return PsiReference.EMPTY_ARRAY
+        }
+
+        return arrayOf(MicroJavaClassTypeReference(element))
     }
 
     companion object {
-        val LOG = Logger.getInstance(MicroJavaReferenceProvider::class.java)
+        val LOG = Logger.getInstance(MicroJavaClassTypeReferenceProvider::class.java)
     }
 }

@@ -33,10 +33,19 @@ class MicroJavaColorSettingsPage : ColorSettingsPage {
         return """
             program Test
             {
+              /* This is a comment */
+              int GLOBAL;
+              final int CONSTANT = 1;
+              
+              void doPrint(char x) {
+                print(x);
+              }
+            
               void main()
                 int a;
               {
             	read(a);
+                doPrint('a');
             	if (a == 1) { print('='); print('='); print(','); }
             	if (a != 1) { print('!'); print('='); print(','); }
             	if (a < 1)  { print('<'); print(','); }
@@ -66,6 +75,11 @@ private val DESCRIPTORS = arrayOf(
     AttributesDescriptor("Bracket", MicroJavaSyntaxHighlighter.BRAKET),
     AttributesDescriptor("Parenthesis", MicroJavaSyntaxHighlighter.PARENTHESIS),
     AttributesDescriptor("Block comment", MicroJavaSyntaxHighlighter.COMMENT),
-    AttributesDescriptor("Bad character", MicroJavaSyntaxHighlighter.BAD_CHARACTER)
+    AttributesDescriptor("Bad character", MicroJavaSyntaxHighlighter.BAD_CHARACTER),
+    AttributesDescriptor("Function call", MicroJavaSyntaxHighlighter.FUNCTION_CALL),
+    AttributesDescriptor("Function declaration", MicroJavaSyntaxHighlighter.FUNCTION_DECLARATION),
 
+    AttributesDescriptor("Local variables", MicroJavaSyntaxHighlighter.LOCAL_VARS),
+    AttributesDescriptor("Global variables", MicroJavaSyntaxHighlighter.GLOBAL_VARS),
+    AttributesDescriptor("Constant", MicroJavaSyntaxHighlighter.CONSTANT),
 )

@@ -8,7 +8,6 @@ import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributes
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
-import org.example.microjava.psi.MicroJavaKeywordTokens
 import org.example.microjava.psi.MicroJavaSingleValueTokens
 import org.example.microjava.psi.MicroJavaTokenSets
 import org.example.microjava.psi.MicroJavaTypes
@@ -35,6 +34,21 @@ class MicroJavaSyntaxHighlighter : SyntaxHighlighterBase() {
         val DOT = createTextAttributesKey("MICROJAVA_DOT", DefaultLanguageHighlighterColors.DOT)
         val COMMA = createTextAttributesKey("MICROJAVA_COMMA", DefaultLanguageHighlighterColors.COMMA)
         val BAD_CHARACTER = createTextAttributesKey("MICROJAVA_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
+
+        val FUNCTION_CALL =
+            createTextAttributesKey("MICROJAVA_FUNCTION_CALL", DefaultLanguageHighlighterColors.FUNCTION_CALL)
+
+        val FUNCTION_DECLARATION =
+            createTextAttributesKey("MICROJAVA_FUNCTION_DECL", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION)
+        val CLASS_DECLARATION =
+            createTextAttributesKey("MICROJAVA_CLASS_DECL", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val CLASS_TYPE =
+            createTextAttributesKey("MICROJAVA_CLASS_REF", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val LOCAL_VARS =
+            createTextAttributesKey("MICROJAVA_LOCAL_VARS", DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
+        val GLOBAL_VARS =
+            createTextAttributesKey("MICROJAVA_GLOBAL_VARS", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+        val CONSTANT = createTextAttributesKey("MICROJAVA_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT)
 
         private val BAD_CHAR_KEYS = arrayOf(BAD_CHARACTER)
         private val COMMENT_KEYS = arrayOf(COMMENT)
@@ -100,7 +114,7 @@ class MicroJavaSyntaxHighlighter : SyntaxHighlighterBase() {
             return CHAR_CONST_KEYS
         }
 
-        if(token in MicroJavaTokenSets.KEYWORDS){
+        if (token in MicroJavaTokenSets.KEYWORDS) {
             return KEYWORD_KEYS
         }
 
