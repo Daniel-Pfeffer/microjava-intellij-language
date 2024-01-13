@@ -89,7 +89,9 @@ class MicroJavaHighlightingAnnotator : Annotator {
     private fun getColourForVarDecl(element: MicroJavaVarDecl): TextAttributesKey {
         // TODO: add more types
         return if (element.isLocal) {
-            MicroJavaSyntaxHighlighter.LOCAL_VARS
+            val varDeclParent = element.parent
+            if (varDeclParent is MicroJavaClassDecl) MicroJavaSyntaxHighlighter.FIELD
+            else MicroJavaSyntaxHighlighter.LOCAL_VARS
         } else {
             MicroJavaSyntaxHighlighter.GLOBAL_VARS
         }

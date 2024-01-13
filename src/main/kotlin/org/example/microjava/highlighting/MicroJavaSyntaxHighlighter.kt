@@ -51,6 +51,8 @@ class MicroJavaSyntaxHighlighter : SyntaxHighlighterBase() {
             createTextAttributesKey("MICROJAVA_GLOBAL_VARS", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
         val CONSTANT = createTextAttributesKey("MICROJAVA_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT)
 
+        val FIELD = createTextAttributesKey("MICROJAVA_FIELD", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+
         private val BAD_CHAR_KEYS = arrayOf(BAD_CHARACTER)
         private val COMMENT_KEYS = arrayOf(COMMENT)
         private val KEYWORD_KEYS = arrayOf(KEYWORD)

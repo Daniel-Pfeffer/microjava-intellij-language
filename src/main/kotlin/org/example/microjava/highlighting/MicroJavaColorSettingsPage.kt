@@ -42,7 +42,9 @@ class MicroJavaColorSettingsPage : ColorSettingsPage {
                 print(<param>x</param>);
               }
               
-              class <class>SomeClass</class>
+              class <class>SomeClass</class> {
+                int <field>field</field>;
+              }
             
               void <function>main</function>()
                 int <local>a</local>;
@@ -70,6 +72,7 @@ private val ADDITIONAL_DESCRIPTORS = mapOf(
     "functionCall" to MicroJavaSyntaxHighlighter.FUNCTION_CALL,
     "class" to MicroJavaSyntaxHighlighter.CLASS_DECLARATION,
     "local" to MicroJavaSyntaxHighlighter.LOCAL_VARS,
+    "field" to MicroJavaSyntaxHighlighter.FIELD,
     "param" to MicroJavaSyntaxHighlighter.PARAMS,
 )
 
@@ -90,6 +93,7 @@ private val DESCRIPTORS = arrayOf(
     AttributesDescriptor("Comment//Block comment", MicroJavaSyntaxHighlighter.COMMENT),
 
     AttributesDescriptor("Class//Class declaration", MicroJavaSyntaxHighlighter.CLASS_DECLARATION),
+    AttributesDescriptor("Class//Fields", MicroJavaSyntaxHighlighter.FIELD),
 
     AttributesDescriptor("Methods//Call", MicroJavaSyntaxHighlighter.FUNCTION_CALL),
     AttributesDescriptor("Methods//Declaration", MicroJavaSyntaxHighlighter.FUNCTION_DECLARATION),
