@@ -1,4 +1,4 @@
-package org.example.microjava
+package org.example.microjava.highlighting
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import org.example.microjava.psi.*
 
-class MicroJavaAnnotator : Annotator {
+class MicroJavaHighlightingAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         if (element is LeafPsiElement) {
             return
@@ -62,7 +62,7 @@ class MicroJavaAnnotator : Annotator {
             element is MicroJavaSimpleType && element.references.isNotEmpty() -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element.textRange)
-                    .textAttributes(MicroJavaSyntaxHighlighter.CLASS_TYPE)
+                    .textAttributes(MicroJavaSyntaxHighlighter.CLASS_DECLARATION)
                     .create()
             }
 

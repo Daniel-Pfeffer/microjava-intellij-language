@@ -38,8 +38,8 @@
         />
         <lang.syntaxHighlighterFactory
                 language="MicroJava"
-                implementationClass="org.example.microjava.MicroJavaSyntaxHighlighterFactory"/>
-        <colorSettingsPage implementation="org.example.microjava.MicroJavaColorSettingsPage"/>
+                implementationClass="org.example.microjava.highlighting.MicroJavaSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="org.example.microjava.highlighting.MicroJavaColorSettingsPage"/>
         <configurationType implementation="org.example.microjava.configuration.run.MicroJavaRunConfigurationType"/>
 
         <codeInsight.lineMarkerProvider
@@ -71,7 +71,8 @@
                 language="MicroJava"
                 implementationClass="org.example.microjava.usage.MicroJavaUsagesProvider"
         />
-        <annotator language="MicroJava" implementationClass="org.example.microjava.MicroJavaAnnotator"/>
+        <annotator language="MicroJava"
+                   implementationClass="org.example.microjava.highlighting.MicroJavaHighlightingAnnotator"/>
 
     </extensions>
 </idea-plugin>
