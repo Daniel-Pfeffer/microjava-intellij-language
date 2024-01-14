@@ -29,11 +29,7 @@ MethodDecl ::= (Type | "void") Identifier "(" [FormPars] ")" VarDecl* Block
 
 FormPars ::= Type Identifier ( "," Type Identifier )*
 
-
-SimpleType ::= (ident | "int" | "char")
-{
-    methods=[getReferences]
-}
+SimpleType ::= (Referencable | "int" | "char")
 
 Identifier ::= ident
 {
@@ -83,7 +79,9 @@ Factor ::= (Designator [ ActPars ])
 
 CharConst ::= "'a'" | "'b'" | "'c'" | "'d'" | "'e'" | "'f'" | "'g'" | "'h'" | "'i'" | "'j'" | "'k'" | "'l'" | "'m'" | "'n'" | "'o'" | "'p'" | "'q'" | "'r'" | "'s'" | "'t'" | "'u'" | "'v'" | "'w'" | "'x'" | "'y'" | "'z'" | "'A'" | "'B'" | "'C'" | "'D'" | "'E'" | "'F'" | "'G'" | "'H'" | "'I'" | "'J'" | "'K'" | "'L'" | "'M'" | "'N'" | "'O'" | "'P'" | "'Q'" | "'R'" | "'S'" | "'T'" | "'U'" | "'V'" | "'W'" | "'X'" | "'Y'" | "'Z'" | "'0'" | "'1'" | "'2'" | "'3'" | "'4'" | "'5'" | "'6'" | "'7'" | "'8'" | "'9'" | "' '" | "'\\t'" | "'\\n'" | "'\\r'" | "'\\f'" | "'\\b'" | "'\\\\'" | "'\\''" | "'\"'" | "'['" | "']'" | "'('" | "')'" | "'{'" | "'}'" | "'+'" | "'-'" | "'*'" | "'/'" | "'%'" | "'!'" | "'&'" | "'|'" | "'^'" | "'~'" | "'='" | "'>'" | "'<'" | "'?'" | "':'" | "'.'" | "','" | "';'"
 
-Designator ::= ident ( "." ident | "[" Expr "]" )*
+Designator ::= Referencable ( "." Referencable | "[" Expr "]" )*
+
+Referencable ::= ident
 {
     methods=[getReferences]
 }

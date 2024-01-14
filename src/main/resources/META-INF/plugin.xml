@@ -60,12 +60,8 @@
                 implementationClass="org.example.microjava.reference.MicroJavaRefactoringSupportProvider"/>
         />
         <lang.elementManipulator
-                forClass="org.example.microjava.psi.MicroJavaDesignator"
-                implementationClass="org.example.microjava.psi.manipulator.DesignatorManipulator"
-        />
-        <lang.elementManipulator
-                forClass="org.example.microjava.psi.MicroJavaSimpleType"
-                implementationClass="org.example.microjava.psi.manipulator.SimpleTypeManipulator"
+                forClass="org.example.microjava.psi.MicroJavaReferencable"
+                implementationClass="org.example.microjava.psi.manipulator.ReferencableManipulator"
         />
         <lang.findUsagesProvider
                 language="MicroJava"

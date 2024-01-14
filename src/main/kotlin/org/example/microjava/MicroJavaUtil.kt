@@ -29,14 +29,20 @@ object MicroJavaUtil {
         val file = element.containingFile as MicroJavaFile
 
         return file.childrenOfType<MicroJavaClassDecl>().firstOrNull {
-                it.identifier.name == name
-            }?.identifier
+            it.identifier.name == name
+        }?.identifier
     }
 
-    fun findBacktrackingReferenceToDesignator(
-        element: MicroJavaDesignator,
+    fun findBacktrackingReferenceForReferenceable(
+        element: MicroJavaReferencable,
         name: String? = null,
     ): PsiElement? {
+        if (element.parent is MicroJavaSimpleType) {
+            return findReferenceToClassDecl(element, name)
+        }
+
+        // element.parent is MicroJavaDesignator
+
         // search for local occurrence
         val method = PsiTreeUtil.getParentOfType(element, MicroJavaMethodDecl::class.java)
         if (method != null) {
@@ -53,7 +59,7 @@ object MicroJavaUtil {
             }
         }
         // find for global scope
-        val file = PsiTreeUtil.getParentOfType(element, MicroJavaFile::class.java)!!
+        val file = element.containingFile as MicroJavaFile
         // find global vars
         PsiTreeUtil.getChildrenOfType(file, MicroJavaVarDecl::class.java)
             ?.forEach { varDecl ->
@@ -75,6 +81,21 @@ object MicroJavaUtil {
             ?.firstOrNull { it.identifier.name == name }
             ?.let { return it.identifier }
         return null
+    }
+
+    fun findClassFromType(type: MicroJavaType): MicroJavaClassDecl? {
+        return type.simpleType
+            .referencable
+            ?.references
+            ?.firstOrNull()
+            ?.resolve()
+            ?.parent as? MicroJavaClassDecl
+    }
+
+    fun findFieldReferenceOfClass(clazz: MicroJavaClassDecl, name: String? = null): PsiElement? {
+        return clazz.varDeclList
+            .flatMap { it.identifierList }
+            .firstOrNull { it.name == name }
     }
 
     private fun findFromVarDecl(varDecl: MicroJavaVarDecl, name: String?): PsiElement? {

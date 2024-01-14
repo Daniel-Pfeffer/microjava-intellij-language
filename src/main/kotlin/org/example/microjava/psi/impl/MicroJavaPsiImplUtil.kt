@@ -48,12 +48,7 @@ object MicroJavaPsiImplUtil {
     }
 
     @JvmStatic
-    fun getReferences(element: MicroJavaDesignator): Array<PsiReference> {
-        return ReferenceProvidersRegistry.getReferencesFromProviders(element)
-    }
-
-    @JvmStatic
-    fun getReferences(element: MicroJavaSimpleType): Array<PsiReference> {
+    fun getReferences(element: MicroJavaReferencable): Array<PsiReference> {
         return ReferenceProvidersRegistry.getReferencesFromProviders(element)
     }
 
@@ -72,5 +67,4 @@ object MicroJavaPsiImplUtil {
     fun isLocal(element: MicroJavaVarDecl): Boolean {
         return !isGlobal(element)
     }
-
 }

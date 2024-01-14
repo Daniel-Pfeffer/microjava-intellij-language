@@ -7,16 +7,16 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import org.example.microjava.psi.*
+import org.example.microjava.psi.impl.MicroJavaPsiUtil
 
 class MicroJavaHighlightingAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         if (element is LeafPsiElement) {
             return
         }
-        when {
-            element is MicroJavaDesignator -> {
+        when (element) {
+            is MicroJavaReferencable -> {
                 val reference = element.references.firstOrNull()?.resolve()?.parent ?: return
-
                 when (reference) {
                     is MicroJavaMethodDecl -> {
                         // this is function
@@ -41,32 +41,31 @@ class MicroJavaHighlightingAnnotator : Annotator {
                             .textAttributes(MicroJavaSyntaxHighlighter.CONSTANT)
                             .create()
                     }
+
+                    is MicroJavaClassDecl ->{
+                        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(element.textRange)
+                            .textAttributes(MicroJavaSyntaxHighlighter.CLASS_DECLARATION)
+                            .create()
+                    }
                 }
             }
 
-
-            element is MicroJavaMethodDecl -> {
+            is MicroJavaMethodDecl -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element.identifier.textRange)
                     .textAttributes(MicroJavaSyntaxHighlighter.FUNCTION_DECLARATION)
                     .create()
             }
 
-            element is MicroJavaClassDecl -> {
+            is MicroJavaClassDecl -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element.identifier.textRange)
                     .textAttributes(MicroJavaSyntaxHighlighter.CLASS_DECLARATION)
                     .create()
             }
 
-            element is MicroJavaSimpleType && element.references.isNotEmpty() -> {
-                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                    .range(element.textRange)
-                    .textAttributes(MicroJavaSyntaxHighlighter.CLASS_DECLARATION)
-                    .create()
-            }
-
-            element is MicroJavaIdentifier -> {
+            is MicroJavaIdentifier -> {
                 if (element.parent is MicroJavaVarDecl) {
                     val colour = getColourForVarDecl(element.parent as MicroJavaVarDecl)
                     holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
@@ -76,8 +75,7 @@ class MicroJavaHighlightingAnnotator : Annotator {
                 }
             }
 
-
-            element is MicroJavaConstDecl -> {
+            is MicroJavaConstDecl -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element.identifier.textRange)
                     .textAttributes(MicroJavaSyntaxHighlighter.CONSTANT)
@@ -87,7 +85,6 @@ class MicroJavaHighlightingAnnotator : Annotator {
     }
 
     private fun getColourForVarDecl(element: MicroJavaVarDecl): TextAttributesKey {
-        // TODO: add more types
         return if (element.isLocal) {
             val varDeclParent = element.parent
             if (varDeclParent is MicroJavaClassDecl) MicroJavaSyntaxHighlighter.FIELD

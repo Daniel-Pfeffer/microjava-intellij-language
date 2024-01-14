@@ -2,15 +2,15 @@ package org.example.microjava.psi.manipulator
 
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.ElementManipulator
-import org.example.microjava.psi.MicroJavaDesignator
+import org.example.microjava.psi.MicroJavaReferencable
 import org.example.microjava.psi.impl.MicroJavaElementFactory
 
-class DesignatorManipulator : ElementManipulator<MicroJavaDesignator> {
+class ReferencableManipulator : ElementManipulator<MicroJavaReferencable> {
     override fun handleContentChange(
-        element: MicroJavaDesignator,
+        element: MicroJavaReferencable,
         range: TextRange,
         newContent: String?,
-    ): MicroJavaDesignator? {
+    ): MicroJavaReferencable? {
         if (newContent == null) {
             return null
         }
@@ -19,7 +19,7 @@ class DesignatorManipulator : ElementManipulator<MicroJavaDesignator> {
         return element
     }
 
-    override fun handleContentChange(element: MicroJavaDesignator, newContent: String?): MicroJavaDesignator? {
+    override fun handleContentChange(element: MicroJavaReferencable, newContent: String?): MicroJavaReferencable? {
         if (newContent == null) {
             return null
         }
@@ -27,7 +27,7 @@ class DesignatorManipulator : ElementManipulator<MicroJavaDesignator> {
         return element
     }
 
-    override fun getRangeInElement(element: MicroJavaDesignator): TextRange {
+    override fun getRangeInElement(element: MicroJavaReferencable): TextRange {
         return element.reference?.rangeInElement ?: TextRange.EMPTY_RANGE
     }
 }
