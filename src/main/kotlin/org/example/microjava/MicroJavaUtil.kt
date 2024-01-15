@@ -7,13 +7,6 @@ import org.example.microjava.psi.*
 
 object MicroJavaUtil {
 
-    fun findSimpleType(microJavaFile: MicroJavaFile, name: String? = null): List<MicroJavaSimpleType> {
-        return PsiTreeUtil.getChildrenOfType(microJavaFile, MicroJavaSimpleType::class.java)
-            ?.filter { name == null || name == it.text }
-            ?.map { it }
-            ?: emptyList()
-    }
-
     fun findReferenceToNamedElement(
         parentScope: MicroJavaMethodDecl,
         name: String? = null,

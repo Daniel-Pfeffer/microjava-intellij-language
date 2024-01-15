@@ -4,7 +4,6 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.*
 import com.intellij.psi.util.PsiTreeUtil
-import com.jetbrains.rd.generator.nova.array
 import org.example.microjava.MicroJavaUtil
 import org.example.microjava.psi.*
 
